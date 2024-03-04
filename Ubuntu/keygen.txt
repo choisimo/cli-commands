@@ -14,3 +14,11 @@ sudo apt-get install ssh-openserver
 4. /etc/ssh/sshd_config 에서 
    PasswordAuthentication 찾아서 no 로 변경 (기존 yes)
    => 기존 id + password 방식 authentication 불가 
+
+
+
+5. 여러 사용자 일 경우
+    각 사용자 별로 ~/.ssh 에 authorized_keys 만들어서 public key 등록
+    /home/${user}/.ssh/authorized_keys
+
+
