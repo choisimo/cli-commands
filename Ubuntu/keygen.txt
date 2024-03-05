@@ -28,3 +28,8 @@ chmod -R 775 ${DIR}
 
 // private - public key 방식으로 로그인 변경 후 파일 전송하는 방법
 scp -i /path/to/private_key.pem ${file to send} user@server_ip:remote_directory/
+
+openssh 로 전송할 경우 private-key 포맷을 변경해주어야 한다.
+
+puttygen 을 열고, Load an existing private key file Load 후
+상단 Conversions 를 누르고 키를 변환할 수 있도록 한다.
