@@ -22,3 +22,5 @@ sudo apt-get install ssh-openserver
     /home/${user}/.ssh/authorized_keys
 
 
+chown -R ${user} ${group} ${DIR}
+chmod -R 775 ${DIR}
