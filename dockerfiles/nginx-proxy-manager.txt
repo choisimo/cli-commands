@@ -1,0 +1,16 @@
+// 81 == 설정 페이지, 443 == https, 80 == http 
+
+docker run -d \
+  --name nginx-proxy-manager \
+  -p 81:81 \
+  -p 443:443 \
+  -p 80:80 \
+  -v /home/user/mydata:/data \
+  -v /home/user/myletsencrypt:/etc/letsencrypt \
+  jc21/nginx-proxy-manager
+
+docker pull jc21/nginx-proxy-manager
+
+// docker container local dir 맵핑할 dir 생성
+data file path : mkdir -p /docker/NPM/data 
+encrypt file path : mkdir -p /docker/NPM/encrypt
