@@ -27,7 +27,9 @@ chmod -R 775 ${DIR}
 
 
 // private - public key 방식으로 로그인 변경 후 파일 전송하는 방법
+
 scp -i /path/to/private_key ${file to send} user@server_ip:remote_directory/
+scp -P ${remote_server_port} -i /path/to/private_key ${file_to_send} ${remote_server_username}@${remote_server (ip | domain)}:${remote_server_directory}
 
 openssh 로 전송할 경우 private-key 포맷을 변경해주어야 한다.
 
