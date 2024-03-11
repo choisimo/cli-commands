@@ -8,7 +8,8 @@ import random
 def execute_bat_file():
     bat_file_path = "C:/workspace/attendance.bat"
     print("bat_file 실행")
-    subprocess.call(bat_file_path, shell=True)
+    process = subprocess.Popen(bat_file_path, shell=True, creationflags=subprocess.CREATE_NEW_PROCESS_GROUP)
+    process.wait()
 
 print("프로그램 실행")
 #  현재 시간 가지고 오기
@@ -26,6 +27,7 @@ while now.time() != target_time.time():
     print("실시간 동작 중..", now)
     if (now.strftime("%H:%M") == target_time.strftime("%H:%M")):
         execute_bat_file()
+        print("bat 파일 종료. 40초 time sleep 실행")
         time.sleep(40)
         target_time = datetime.time(8, randtime1, randtime2) + datetime.timedelta(days=1)
         print("새로운 시작 시간 : ", target_time)
