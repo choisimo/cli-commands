@@ -8,7 +8,7 @@ import random
 def execute_bat_file():
     bat_file_path = "C:/workspace/attendance.bat"
     print("bat_file 실행")
-    process = subprocess.Popen(bat_file_path, shell=True, creationflags=subprocess.CREATE_NEW_PROCESS_GROUP)
+    process = subprocess.Popen(bat_file_path, shell=True, creationflags=subprocess.CREATE_NEW_CONSOLE)
     process.wait()
 
 print("프로그램 실행")
