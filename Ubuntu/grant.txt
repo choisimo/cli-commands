@@ -5,3 +5,11 @@ FLUSH PRIVILEGES;
 SHOW GRANTS FOR '${username}'@'%';
 
 docker inspect mysql1 | grep "${ip_address}"
+
+
+
+
+# for additional file management (ACL)
+setfacl -d -m u::rwx,g::rwx,o::rwx /path/to/dir
+# (umask)
+umask 
