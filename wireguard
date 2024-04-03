@@ -7,7 +7,7 @@ services:
       - WG_HOST=gcp.nodove.com
 
       #Optional:
-      - PASSWORD=dover1234!
+      - PASSWORD=password
       - WG_PORT=51820
       - WG_DEFAULT_ADDRESS=10.8.0.x
       - WG_DEFAULT_DNS=1.1.1.1
