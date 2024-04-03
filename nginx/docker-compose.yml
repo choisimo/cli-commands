@@ -6,7 +6,6 @@ services:
       - '80:80'
       - '81:81'
       - '443:443'
-    restart: unless-stopped
     environment:
       DB_MYSQL_HOST: "db"
       DB_MYSQL_PORT: 3306
