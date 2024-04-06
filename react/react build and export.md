@@ -20,12 +20,7 @@
     nvm ls-remote -lts
     nvm install v20.9.0 // 24.04.06 based 
     node --version
-    
-## install npm (not recommended)
-    apt-get install npm
-    apt-get install nodejs
-    //apt-get upgrade nodejs
-    node --version
+    npm install -g npm@latest
     
 ## make server
     npm install -g serve
