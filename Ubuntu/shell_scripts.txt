@@ -24,3 +24,5 @@ fi
 
 nohup serve -s /docker/web/webapps/frontend/build -l 3000 &
 echo "새로운 프로젝트 실행 완료"
+
+$ netstat -tnlup grep 3000 | awk '{match($7, /[0-9]+/, a); print a[0]}'
