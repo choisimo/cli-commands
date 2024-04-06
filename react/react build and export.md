@@ -19,6 +19,7 @@
     nvm ls-remote -lts
     nvm install 
     node --version
+    apt-get install npm
     
 ## make server
     npm install -g serve
