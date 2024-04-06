@@ -13,13 +13,19 @@
     npm run build
 
 # Sever setting
-## install nvm
+## install nvm (install nodejs using nvm)
     wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+    // if nvm command not work, type source ~/.bashrc
     nvm --version
     nvm ls-remote -lts
-    nvm install 
+    nvm install v20.9.0 // 24.04.06 based 
     node --version
+    
+## install npm (not recommended)
     apt-get install npm
+    apt-get install nodejs
+    //apt-get upgrade nodejs
+    node --version
     
 ## make server
     npm install -g serve
