@@ -20,3 +20,12 @@
 
 ## bind mount (mount direct to host's file system)
     $ docker run -v ${directory}:/${docker_exec_dir} -it --name ${docker_container} /bin/bash
+
+### so what's the difference between using volume && binding file-system
+    if making the volume, It's location directory may be "/var/lib/docker/volume/~",
+    the effects of using volume is that It becomes easier to 
+    1. migration or backup
+    2. can manage with docker cli or docker api
+    3. works well either windwos or linux OS    
+    4. can share safely between containers
+    
