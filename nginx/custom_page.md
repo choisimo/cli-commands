@@ -4,4 +4,4 @@
       alias /var/www/html/error_html/50x/;
     }
 ## important! if not working, add on your destination proxy
-    proxy_intercept_erros on;
+    proxy_intercept_errors on;
