@@ -9,7 +9,6 @@ docker run -d \
   -v /docker/NPM/encrypt:/etc/letsencrypt \
   -v /docker/NPM/conf.d:/etc/nginx/conf.d \
   -v /docker/NPM/html:/var/www/html \
-  
   jc21/nginx-proxy-manager
 
 docker pull jc21/nginx-proxy-manager
