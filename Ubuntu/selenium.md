@@ -1,4 +1,7 @@
 ## install chrome
+    sudo apt-get update 
+    sudo apt-get install wget
+    
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
     
     sudo apt install ./google-chrome-stable_current_amd64.deb
@@ -7,9 +10,20 @@
     
     unzip chromedriver_linux64.zip
 
+    
 ## install python3
     sudo apt-get install python3
 
+## install selenium
+    sudo pip install xlrd
+    sudo apt-get install xvfb
+    sudo pip install pyvirtualdisplay
+    sudo pip install selenium
+
+## selenium 
+    from selenium import webdriver
+    from pyvirtualdisplay import Display
+    
 ## crontab
     #include <stdio.h>
     #include <stdlib.h>
