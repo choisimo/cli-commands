@@ -15,6 +15,7 @@
 ## install python3
     sudo apt-get install python3
     export PATH=/usr/local/bin/python3:$PATH 
+    sudo apt-get install pip
 
 ## install selenium
     sudo pip install xlrd
