@@ -9,7 +9,6 @@
     wget https://chromedriver.storage.googleapis.com/109.0.5414.74/chromedriver_linux64.zip
     
     unzip chromedriver_linux64.zip
-
     
 ## install python3
     sudo apt-get install python3
@@ -22,8 +21,14 @@
 
 ## selenium 
     from selenium import webdriver
-    from pyvirtualdisplay import Display
-    
+    from pyvirtualdisplay import Display // for cli environment
+
+    display = Display(visible=0, size=(1920, 1080))
+    display.start()
+    webdriver.Chrome(executable_path='/path/to/chromedriver', options=chrome_options)
+
+    chrome_options.add_argument("--no-sandbox")
+    chrome_options_add_argument("--disable-dev-shm-usage")
 ## crontab
     #include <stdio.h>
     #include <stdlib.h>
