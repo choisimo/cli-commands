@@ -10,10 +10,15 @@
     
 ## binding redis.conf file
     $ docker pull redis
-    $ docker run -d --name redis_test -p 6379:6379 -v /your/local/binding/redis/redis.conf:/usr/local/etc/redis/redis.conf redis
+#### docker run 
+    sudo mkdir -p /your/local/binding/redis
+    $ docker run -d --name redis_test -p 6379:6379 \
+    -v /your/local/binding/redis/redis.conf:/usr/local/etc/redis/redis.conf \
+    redis redis-server --requirepass "custom password"
     $ docker exec -it redis-test bash
     $ apt-get update && apt-get install vim
     $ vim /usr/local/etc/redis/redis.conf
     $ bind 0.0.0.0
     $ exit
     $ docker restart redis-test
+    
