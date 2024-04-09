@@ -8,7 +8,7 @@
     -v redis_data:/data \
     redis:7.0.2 redis-server /etc/redis/redis.conf
     
-    ## binding redis.conf file
+## binding redis.conf file
     $ docker pull redis
     $ docker run -d --name redis_test -p 6379:6379 -v /your/local/binding/redis/redis.conf:/usr/local/etc/redis/redis.conf redis
     $ docker exec -it redis-test bash
