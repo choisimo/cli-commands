@@ -1,5 +1,5 @@
 ## set magic packet
-    - mothboard bios -> Wake On Lan enable
+    - motherboard bios -> Wake On Lan enable
     - devmgmt.msc -> NIC -> woake on magic packet enable
 ## ssh server 설치
     선택적 기능 -> OpenSSH Server install
@@ -27,4 +27,6 @@ WOL('AA:AA:AA:AA:AA:88')
 
 ## windows ssh 
     Get-NetFirewallRule -Name OpenSSH-Server-In-TCP (check Enabled TRUE)
+    C:\ProgramData\ssh\sshd_config
+    `private_key path` C:\users\user_name\.ssh\
     
