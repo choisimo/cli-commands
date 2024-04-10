@@ -31,8 +31,11 @@ WOL('AA:AA:AA:AA:AA:88')
     C:\ProgramData\ssh\sshd_config
     PubkeyAuthentication yes
     PasswordAuthentication no
-    
-`private_key path` C:\users\user_name\.ssh\authorized_keys
+
+## create ssh-key
+    open cmd && ssh-keygen
+    change id_rsa.pub to authorized_keys
+`public_key path` C:\users\user_name\.ssh\authorized_keys 
 
 ## restart sshd service
 `Restart-Service -Force -Name sshd` or in desktop manager
