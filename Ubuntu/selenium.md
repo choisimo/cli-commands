@@ -60,4 +60,7 @@
 #### crontab command
     crontab -l //search exist crontabs
     crontab -r //remove all exist crontabs
-    
+
+## no-display example
+![스크린샷 2024-04-11 025618](https://github.com/choisimo/cli-commands/assets/150008602/16ac1405-414d-4805-baf4-1ad7942db1ae)
+
