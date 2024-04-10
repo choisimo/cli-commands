@@ -27,6 +27,10 @@ WOL('AA:AA:AA:AA:AA:88')
 
 ## windows ssh 
     Get-NetFirewallRule -Name OpenSSH-Server-In-TCP (check Enabled TRUE)
+ 
     C:\ProgramData\ssh\sshd_config
-`private_key path` C:\users\user_name\.ssh\authorized_keys
+    PubkeyAuthentication yes
+    PasswordAuthentication no
     
+`private_key path` C:\users\user_name\.ssh\authorized_keys
+
