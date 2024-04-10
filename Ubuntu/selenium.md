@@ -31,8 +31,10 @@
     display.start()
     webdriver.Chrome(executable_path='/path/to/chromedriver', options=chrome_options)
 
+    chrome_options.add_argument("--headless")
     chrome_options.add_argument("--no-sandbox")
     chrome_options_add_argument("--disable-dev-shm-usage")
+    driver = webdriver.Chrome(options=chrome_options)
 ## crontab
     #include <stdio.h>
     #include <stdlib.h>
