@@ -34,3 +34,4 @@ WOL('AA:AA:AA:AA:AA:88')
     
 `private_key path` C:\users\user_name\.ssh\authorized_keys
 
+`Restart-Service -Force -Name sshd`
