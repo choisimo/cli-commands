@@ -1,0 +1,27 @@
+## set magic packet
+    - mothboard bios -> Wake On Lan enable
+    - devmgmt.msc -> NIC -> woake on magic packet enable
+## ssh server 설치
+    선택적 기능 -> OpenSSH Server install
+## ipv4, mac
+    ipconfig /all
+## 24hours server .py code
+    ```
+    import socket, struct
+    def WOL(macAddr):
+      sep = macAddr[2]
+      macAddr = macAddr.replace(sep, '')
+
+      data = b'FFFFFFFFFFFF' + (macAddr * 16).encode()
+      send_data = b''
+
+      for i in range(0, len(data), 2):
+        send_data += struct.pack('B', int(data[i: i + 2], 16))
+
+      sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+      sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+      sock.sendto(send_data, ('192.168.1.255', 2304)) 
+
+    WOL('AA:AA:AA:AA:AA:88')
+    ```
+    
