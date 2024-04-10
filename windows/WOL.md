@@ -34,4 +34,6 @@ WOL('AA:AA:AA:AA:AA:88')
     
 `private_key path` C:\users\user_name\.ssh\authorized_keys
 
-`Restart-Service -Force -Name sshd`
+## restart sshd service
+`Restart-Service -Force -Name sshd` or in desktop manager
+
