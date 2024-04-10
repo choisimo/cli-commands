@@ -25,3 +25,6 @@ def WOL(macAddr):
 WOL('AA:AA:AA:AA:AA:88')
 ```
 
+## windows ssh 
+    Get-NetFirewallRule -Name OpenSSH-Server-In-TCP (check Enabled TRUE)
+    
