@@ -1,6 +1,10 @@
 
 # 단방향 매핑
-## N:1 mapping
+## N:1 mapping 
+    @ManyToOne
+    @JoinColumn(name="post_id, nullable=false)
+    private posts post
+## N:1 mapping (if referencedColumn is not primary key)
   
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "${현재 entity column}", referencedColumnName = "${N 맵핑 entity column}, insertable = "false", updatable = "false")
