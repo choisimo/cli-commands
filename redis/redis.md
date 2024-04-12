@@ -22,3 +22,15 @@
     $ exit
     $ docker restart redis-test
     
+## springboot REDIS
+```
+@Bean
+    public RedisConnectionFactory redisConnectionFactory(){
+        RedisStandaloneConfiguration redisStandaloneConfiguration = new         
+       RedisStandaloneConfiguration();
+        redisStandaloneConfiguration.setHostName(host);
+        redisStandaloneConfiguration.setPort(port);
+        redisStandaloneConfiguration.setPassword(password);
+        return new LettuceConnectionFactory(redisStandaloneConfiguration);
+    }
+```
