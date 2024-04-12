@@ -1,4 +1,4 @@
 ## column insert 할 때 timestamp
-      @CreationTimestamp
+    @CreationTimestamp
 ## column update 할 때 timestamp 
-    	@UpdateTimestamp
+    @UpdateTimestamp
