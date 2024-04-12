@@ -43,7 +43,6 @@ public class alarmReadsId implements Serializable {
         this.userId = userId;
     }
 }
-
 ```
 ```java
 - 복합키 객체 생성
@@ -55,3 +54,4 @@ alarmRead.setId(id);
 
 alarmReadsRepository.save(alarmRead);
 ```
+
