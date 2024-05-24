@@ -13,8 +13,8 @@ services:
       DB_MYSQL_PASSWORD: "npm"
       DB_MYSQL_NAME: "npm"
     volumes:
-      - ./data:/data
-      - ./letsencrypt:/etc/letsencrypt
+      - /docker/npm/data:/data
+      - /docker/npm/letsencrypt:/etc/letsencrypt
   db:
     image: 'jc21/mariadb-aria:latest'
     environment:
@@ -23,5 +23,11 @@ services:
       MYSQL_USER: 'npm'
       MYSQL_PASSWORD: 'npm'
     volumes:
-      - ./data/mysql:/var/lib/mysql
+      - /docker/npm/data/mysql:/var/lib/mysql
 
+
+```shell
+sudo mkdir -p /docker/npm/data
+sudo mkdir -p /docker/npm/letsencrypt
+sudo mkdir -p /docker/npm/data/mysql
+```
