@@ -21,6 +21,10 @@
     nvm install v20.9.0 // 24.04.06 based 
     node --version
     npm install -g npm@latest
+
+    sudo apt-get update
+    sudo apt-get install nodejs npm -y
+    sudo npm install -g server
     
 ## make server
     npm install -g serve
