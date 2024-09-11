@@ -26,6 +26,9 @@ services:
       - /docker/npm/data/mysql:/var/lib/mysql
 
 
+docker stop docker-files_db_1
+docker run -it --rm -e MYSQL_ROOT_PASSWORD="npm" jc21/mariadb-aria --skip-grant-tables
+
 ```shell
 sudo mkdir -p /docker/npm/data
 sudo mkdir -p /docker/npm/letsencrypt
