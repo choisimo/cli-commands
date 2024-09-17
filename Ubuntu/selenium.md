@@ -1,9 +1,14 @@
 ## install chrome
     sudo apt-get update 
     sudo apt-get install wget
-    
+
+#### need to set same version of google-chrome and chromedriver
     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    
+    wget https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_96.0.4664.45-1_amd64.deb
+    sudo dpkg -i google-chrome-stable_96.0.4664.45-1_amd64.deb
+    sudo apt-get install -f 
+    google-chrome --version
+
     sudo apt install ./google-chrome-stable_current_amd64.deb
 
     #### download link
