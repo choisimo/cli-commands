@@ -220,3 +220,22 @@ sudo mount -t davfs https://${webdav_server}:${port}/${destincation_dir} ${mount
 [ubuntu] : /etc/netplan/00-installer-config.yaml
 [debian] : /etc/network/interfaces 
 ```
+
+## lxc drive
+```shell
+lsblk
+
+mkfs.ext4 /dev/${drive}
+mkdir -p /mnt/${value}
+mount /dev/${drive} /mnt/${value}
+
+vim /etc/pve/lxc/<container_id>.conf
+mp0: /mnt/${value},mp=/mnt/${value}
+
+pct stop <container_id>
+pct start <container_id>
+
+pct enter <container_id>
+df -h
+```
+
