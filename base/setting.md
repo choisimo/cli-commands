@@ -203,8 +203,9 @@ https://tteck.github.io/Proxmox/
 ```
 
 ## sudo
+```shell
 sudo usermod -aG sudo ${username}
-
+```
 
 ## WebDav 서버 연동
 ```shell
