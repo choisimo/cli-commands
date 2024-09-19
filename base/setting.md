@@ -214,3 +214,9 @@ sudo apt-get install davfs2
 sudo mkdir -p ${mount_dir}
 sudo mount -t davfs https://${webdav_server}:${port}/${destincation_dir} ${mount_dir}
 ```
+
+## network
+```shell
+[ubuntu] : /etc/netplan/00-installer-config.yaml
+[debian] : /etc/network/interfaces 
+```
