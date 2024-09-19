@@ -1,4 +1,4 @@
-# ip interface 조회
+# ip interface 조회 및 Metric 변경 (우선 순위 변경)
 ```powershell
 Get-NetIPInterface
 Set-NetIPInterface -InterfaceAlias "Wi-Fi" -InterfaceMetric 10
