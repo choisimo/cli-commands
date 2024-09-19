@@ -225,6 +225,11 @@ sudo mount -t davfs https://${webdav_server}:${port}/${destincation_dir} ${mount
 ```shell
 lsblk
 
+fdisk -l
+fdisk /dev/${value}
+mkfs.ext4 /dev/${value}
+
+
 mkfs.ext4 /dev/${drive}
 mkdir -p /mnt/${value}
 mount /dev/${drive} /mnt/${value}
