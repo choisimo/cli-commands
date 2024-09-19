@@ -1,3 +1,4 @@
+```dockerfile
 version: "3.3"
 services:
   wg-easy:
@@ -28,3 +29,9 @@ services:
     sysctls:
       - net.ipv4.ip_forward=1
       - net.ipv4.conf.all.src_valid_mark=1
+```
+## password as hashed password 
+```shell
+vim .env
+password = ${hashed password}
+```
