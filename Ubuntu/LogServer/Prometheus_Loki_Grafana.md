@@ -118,20 +118,23 @@ clients:
   - url: http://192.168.0.44:3200/loki/api/v1/push
 
 scrape_configs:
-- job_name: system
-  static_configs:
-  - targets:
-      - localhost
-    labels:
-      job: spring-boot
-      level: debug
-      __path__: /server/log/backend.log
-  - targets:
-      - localhost
-    labels:
-      job: react
-      level: debug
-      __path__: /server/log/frontend.log
+  - job_name: backend-logs
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: backend-log
+          level: debug
+          __path__: /server/log/backend.log
+
+  - job_name: frontend-logs
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: frontend-log
+          level: debug
+          __path__: /server/log/front.log
 ```
 ---
 
