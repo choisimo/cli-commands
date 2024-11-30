@@ -82,8 +82,8 @@ sudo systemctl enable promtail_service
 sudo systemctl status promtail_service
 ```
 
-## promtail 설정 (promtail.yml) : 
-```yml
+## promtail 설정 (promtail.yaml) : 
+```yaml
 server:
   http_listen_port: 9080  # Promtail HTTP 서버 포트
   grpc_listen_port: 0
@@ -103,6 +103,35 @@ scrape_configs:
           job: system_logs
           host: ${HOSTNAME}
           __path__: /var/log/*.log  # 로그 파일 경로
+```
+
+## promtail 설정 multi (promtail.yaml) : 
+```yaml
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://192.168.0.44:3200/loki/api/v1/push
+
+scrape_configs:
+- job_name: system
+  static_configs:
+  - targets:
+      - localhost
+    labels:
+      job: spring-boot
+      level: debug
+      __path__: /server/log/backend.log
+  - targets:
+      - localhost
+    labels:
+      job: react
+      level: debug
+      __path__: /server/log/frontend.log
 ```
 ---
 
