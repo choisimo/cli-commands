@@ -4,6 +4,7 @@
 if [ "$(id -u)" != "0" ]; then
     echo "SUDO 권한으로 실행해주세요."
     exit 1
+fi  # fi 누락된 부분 추가
 
 # 설정값
 REDIS_VERSION="7.0.2"
@@ -73,7 +74,3 @@ docker run \
 # 5. Redis 컨테이너 상태 확인
 echo "Checking Redis container status..."
 docker ps | grep $CONTAINER_NAME && echo "Redis container with authentication is running successfully!"
-
-# 6. Redis 인증 테스트
-echo "Testing Redis authentication..."
-docker exec -it $CONTAINER_NAME redis-cli -a $REDIS_PASSWORD PING

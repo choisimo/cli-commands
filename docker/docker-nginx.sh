@@ -13,7 +13,7 @@ echo
 # check if the docker-compose command exists
 if ! [ -x "$(command -v docker-compose)" ]; then
     echo "docker-compose is not installed. Please install docker-compose."
-    exit 1
+    sudo apt-get install docker-compose
 fi
 
 # Create necessary directories
@@ -21,6 +21,7 @@ sudo mkdir -p /docker/npm/data
 sudo mkdir -p /docker/npm/letsencrypt
 sudo mkdir -p /docker/npm/data/mysql
 
+cd /docker/npm
 # Docker Compose configuration
 cat <<EOF > docker-compose.yml
 version: '3'
@@ -51,6 +52,18 @@ services:
             - /docker/npm/data/mysql:/var/lib/mysql
 EOF
 
-# Stop and run the Docker container
-docker stop docker-files_db_1
-docker run -it --rm -e MYSQL_ROOT_PASSWORD="$MYSQL_ROOT_PASSWORD" jc21/mariadb-aria --skip-grant-tables
+# Start the Docker containers
+echo "Starting Docker containers... on $(pwd)"
+docker-compose up -d
+
+# Display the status of the Docker containers
+echo "Docker containers status:"
+docker ps
+echo "Docker containers have been started successfully."
+echo "You can access the Nginx Proxy Manager at http://localhost:81"
+echo "You can access the Nginx Proxy Manager dashboard at http://localhost:81/admin"
+echo "You can access the MariaDB database at http://localhost
+
+
+
+

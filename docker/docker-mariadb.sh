@@ -1,5 +1,12 @@
 #!/bin/bash
 
+
+# SUDO 권한 확인
+if [ "$(id -u)" != "0" ]; then
+    echo "SUDO 권한으로 실행해주세요."
+    exit 1
+fi  # fi 누락된 부분 추가
+
 # 설정값
 CONTAINER_NAME="mariadb1"
 TIME_ZONE="+09:00"
