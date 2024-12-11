@@ -44,3 +44,9 @@ docker restart $CONTAINER_NAME
 # 6. 시간대 설정 확인
 echo "Verifying timezone configuration in MariaDB..."
 docker exec -i $CONTAINER_NAME mysql -u root -p$MYSQL_ROOT_PASSWORD -e "SHOW VARIABLES LIKE 'time_zone';"
+
+
+# USER 생성 및 권한 부여
+# docker exec -i $CONTAINER_NAME mysql -u root -p$MYSQL_ROOT_PASSWORD <<EOF
+# CREATE USER 'user'@'%' IDENTIFIED BY 'password';
+# GRANT ALL PRIVILEGES ON *.* TO 'user'@'%' WITH GRANT OPTION;
