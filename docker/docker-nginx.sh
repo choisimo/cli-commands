@@ -6,9 +6,18 @@ if [ "$EUID" -ne 0 ]; then
     exit 1
 fi
 
-# Stop and remove existing Docker containers if they exist
-echo "Stopping and removing existing Docker containers if they exist..."
+
+# Stop and remove existing Nginx Proxy Manager containers
+echo "Stopping and removing existing containers..."
+CONTAINERS=("npm_app" "npm_app_1" "npm_db_1")
+for CONTAINER in "${CONTAINERS[@]}"; do
+    docker stop "$CONTAINER" 2>/dev/null && docker rm "$CONTAINER" 2>/dev/null || echo "$CONTAINER not found. Skipping..."
+done
+
+# Stop and remove Docker Compose containers
+echo "Stopping and removing Docker Compose containers..."
 docker-compose down || true
+
 
 # Remove old Docker volumes and directories
 echo "Removing existing files and directories..."
@@ -39,25 +48,53 @@ if ! [ -x "$(command -v docker-compose)" ]; then
 fi
 
 
-# Create necessary directories and verify
-CREATE_DIRS=(/docker/npm/data /docker/npm/letsencrypt /docker/npm/data/mysql)
-echo "Creating necessary directories..."
+# Create necessary directories and set permissions
+CREATE_DIRS=(/docker/npm/data /docker/npm/letsencrypt /docker/npm/data/mysql /docker/npm/data/logs)
+echo "Creating directories and setting permissions..."
 for DIR in "${CREATE_DIRS[@]}"; do
-    if [ ! -d "$DIR" ]; then
-        echo "Creating $DIR..."
-        sudo mkdir -p "$DIR"
-        if [ $? -ne 0 ]; then
-            echo "Failed to create $DIR. Exiting."
-            exit 1
-        fi
-    else
-        echo "$DIR already exists."
-    fi
-        # Set permissions to avoid MariaDB permission issues
-    echo "Setting ownership and permissions for $DIR..."
+    sudo mkdir -p "$DIR"
     sudo chown -R 1001:1001 "$DIR"
     sudo chmod -R 755 "$DIR"
 done
+
+# Ensure ddl_recovery.log exists
+DDL_LOG_FILE=/docker/npm/data/mysql/ddl_recovery.log
+if [ ! -f "$DDL_LOG_FILE" ]; then
+    sudo touch "$DDL_LOG_FILE"
+    sudo chown 1001:1001 "$DDL_LOG_FILE"
+    sudo chmod 644 "$DDL_LOG_FILE"
+    echo "Created $DDL_LOG_FILE."
+else
+    echo "$DDL_LOG_FILE already exists."
+fi
+
+
+# Ensure Nginx log file exists
+NGINX_LOG_FILE=/docker/npm/data/logs/fallback_error.log
+echo "Ensuring Nginx log file exists at $NGINX_LOG_FILE..."
+if [ ! -f "$NGINX_LOG_FILE" ]; then
+    sudo touch "$NGINX_LOG_FILE"
+    sudo chown 1001:1001 "$NGINX_LOG_FILE"
+    sudo chmod 644 "$NGINX_LOG_FILE"
+    echo "Created Nginx log file at $NGINX_LOG_FILE."
+else
+    echo "$NGINX_LOG_FILE already exists."
+fi
+
+sudo chown -R 1001:1001 /docker/npm/data/mysql
+sudo chmod -R 755 /docker/npm/data/mysql
+
+# 로그 파일이 있는 디렉토리 및 파일 권한 확인 및 수정
+sudo mkdir -p /docker/npm/data/mysql
+sudo touch /docker/npm/data/mysql/ddl_recovery.log
+sudo chown 1001:1001 /docker/npm/data/mysql/ddl_recovery.log
+sudo chmod 644 /docker/npm/data/mysql/ddl_recovery.log
+
+sudo rm -rf /docker/npm/data/*
+sudo mkdir -p /docker/npm/data/
+sudo chown -R 1001:1001 /docker/npm/data/
+sudo chmod -R 755 /docker/npm/data/
+
 
 # Change to the target directory
 cd /docker/npm || { echo "Failed to change directory to /docker/npm. Exiting."; exit 1; }
@@ -90,8 +127,6 @@ services:
             MYSQL_PASSWORD: 'npm'
         ports:
             - '$MYSQL_HOST_PORT:3306'
-        volumes:
-            - /docker/npm/data/mysql:/var/lib/mysql
 EOF
 
 if [ $? -ne 0 ]; then
@@ -118,7 +153,5 @@ echo "Default username and password for Nginx Proxy Manager:"
 echo "Username: admin@example.com"
 echo "Password: changeme"
 
-
-
-
+docker logs -f npm_db_1 
 
