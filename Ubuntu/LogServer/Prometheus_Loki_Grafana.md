@@ -516,3 +516,138 @@ sudo systemctl status grafana-custom
 curl -X GET http://192.168.0.44:3100/metrics | grep promtail
 ```
 
+
+### **Extension**
+
+현재 Loki의 설정 파일을 기반으로 문제를 분석하고 수정해야 할 사항을 몇 가지 제안할 수 있습니다.
+
+---
+
+### **1. Loki 설정 파일 요약**
+#### 주요 설정:
+- **Server**:
+  - HTTP 포트: `3100`.
+  - gRPC 포트: `9096`.
+  - `grpc_server_max_concurrent_streams`: `1000` (동시 스트림 처리 제한).
+
+- **Storage Config**:
+  - `boltdb` 인덱스 저장 위치: `/tmp/loki/index`.
+  - `filesystem` 저장 위치: `/tmp/loki/chunks`.
+
+- **Query Range**:
+  - 캐시 활성화: `true`.
+  - 최대 캐시 크기: `100MB`.
+
+- **Schema Config**:
+  - `store`: `boltdb`.
+  - `object_store`: `filesystem`.
+  - `schema`: `v11`.
+
+- **Ruler**:
+  - Alertmanager URL: `http://localhost:9093`.
+
+---
+
+### **2. "Too Many Outstanding Requests" 해결을 위한 수정**
+`Too Many Outstanding Requests` 오류는 보통 Loki의 요청 처리 능력을 초과했을 때 발생합니다. 설정 파일을 다음과 같이 수정하여 문제를 완화할 수 있습니다.
+
+---
+
+#### **a. `grpc_server_max_concurrent_streams` 값 조정**
+현재 `grpc_server_max_concurrent_streams` 값이 `1000`으로 설정되어 있습니다. 요청이 더 많은 경우 이 값을 늘려 동시 요청 제한을 완화하세요:
+```yaml
+grpc_server_max_concurrent_streams: 2000
+```
+
+---
+
+#### **b. Loki `limits_config` 추가**
+현재 설정에는 `limits_config` 섹션이 없습니다. 이를 추가하여 Loki의 수집 및 처리 제한을 명확히 설정하세요.
+
+```yaml
+limits_config:
+  ingestion_rate_mb: 10        # 초당 10MB 데이터 처리 (기본값 4MB).
+  ingestion_burst_size_mb: 20  # 최대 처리량을 20MB로 설정.
+  max_streams_per_user: 5000   # 사용자당 최대 스트림 수를 5000으로 설정.
+```
+
+---
+
+#### **c. 디스크 경로 최적화**
+현재 Loki는 `/tmp` 경로를 사용하고 있습니다. `/tmp`는 메모리에 종속되거나 크기가 제한적일 수 있습니다. 더 안정적인 저장소를 사용하도록 설정을 변경하세요:
+```yaml
+storage_config:
+  boltdb:
+    directory: /var/loki/index
+  filesystem:
+    directory: /var/loki/chunks
+```
+
+---
+
+#### **d. Query 캐시 용량 확대**
+현재 캐시 크기가 `100MB`로 설정되어 있습니다. 더 많은 요청을 처리하려면 캐시 크기를 늘려보세요:
+```yaml
+query_range:
+  results_cache:
+    cache:
+      embedded_cache:
+        enabled: true
+        max_size_mb: 500  # 500MB로 확대.
+```
+
+---
+
+#### **e. Promtail 설정 조정**
+Promtail에서 데이터를 보내는 빈도와 크기를 조정하여 Loki로 들어오는 요청 수를 제한하세요. Promtail 설정 파일에서 다음 항목을 수정하세요:
+```yaml
+clients:
+  - url: http://<loki-server>:3100/loki/api/v1/push
+    batchsize: 102400    # 100KB로 줄임.
+    batchwait: 5s        # 전송 주기를 5초로 늘림.
+```
+
+---
+
+### **3. Loki 서버 상태 확인**
+변경 사항을 적용한 후 Loki 서버가 제대로 작동하는지 확인하세요:
+
+#### Loki 서버 상태 점검:
+1. Loki 서버 상태 확인:
+   ```bash
+   curl -X GET http://localhost:3100/ready
+   ```
+   - 응답이 `"ready"`이면 서버가 정상 작동 중.
+
+2. Loki 로그 확인:
+   ```bash
+   journalctl -u loki.service
+   ```
+
+---
+
+### **4. 적용 후 검증**
+1. **Promtail 재시작**:
+   ```bash
+   sudo systemctl restart promtail
+   ```
+
+2. **Loki 재시작**:
+   ```bash
+   sudo systemctl restart loki
+   ```
+
+3. Grafana에서 Loki 쿼리를 실행하여 로그가 제대로 수집되고 표시되는지 확인:
+   ```
+   {job="nginx-main-access-log"}
+   ```
+
+---
+
+### **요약**
+- `grpc_server_max_concurrent_streams` 값을 늘리고, `limits_config`로 Loki의 처리 제한을 조정.
+- 디스크 저장 경로를 `/tmp`에서 더 안정적인 경로로 변경.
+- 캐시 크기를 늘려 쿼리 성능 향상.
+- Promtail의 전송 빈도와 크기를 조정하여 Loki의 부하를 줄임.
+
+위 단계를 적용하면 "Too Many Outstanding Requests" 문제를 해결할 수 있을 것입니다. 추가로 문제가 발생하면 말씀해주세요!
