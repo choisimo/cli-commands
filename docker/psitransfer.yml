@@ -8,4 +8,5 @@ services:
     volumes:
       - ${PWD}/data:/data
     environment:
-      - PSITRANSFER_ADMIN_PASS=secret
+      - PSITRANSFER_ADMIN_PASS=${PASSWORD}
+    user: "0:0"
